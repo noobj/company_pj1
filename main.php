@@ -57,6 +57,7 @@
 </table>
 
 <hr />
+<a href="edit.php">edit</a>
 <a href="delete.php">delete</a>
 <hr />
 <form name="form" action="handle.php" method="post">
