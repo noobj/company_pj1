@@ -1,8 +1,8 @@
 <?php
-try{
-    $pdo =new PDO('mysql:host=localhost;dbname=test','root','12345678');
+try {
+    $pdo =new PDO('mysql:host=localhost;dbname=test', 'root', '12345678');
 } catch(PDOException $e) {
-    echo "conld not connect";
+    echo 'conld not connect';
 }
 
 $sql = 'insert into message (content, user) values (:content, :user)';
