@@ -25,7 +25,6 @@ $result = $pdo->query($sqlQueryLimit);
 $pre = $pdo->prepare("SELECT COUNT(id) FROM `message`");
 $pre->execute();
 $totalRecords = $pre->fetchColumn();
-
 $totalPages = ceil($totalRecords/$pageRowRecords);
 
 ?>
@@ -47,10 +46,11 @@ while ($row = $result->fetch()) {
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
-        sprintf("<td><a href=%s?page=%d>%d</a></td>",$_SERVER['PHP_SELF'],$i,$i);
+        echo sprintf("<td><a href=%s?page=%d>%d</a></td>", $_SERVER['PHP_SELF'], $i, $i);
         $i++;
     }
 }
+
 ?>
   </tr>
 </table>
@@ -64,4 +64,3 @@ if ($totalPages > 1) {
     Message:<input type="textarea" name="message" />  <br />
     <input type="submit" value="submit" />
 </form>
-

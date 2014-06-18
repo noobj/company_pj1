@@ -1,4 +1,5 @@
 <?php
+
 try {
 $pdo = new PDO('mysql:host=localhost;dbname=test','root','12345678');
 } catch(PDOException $e) {
@@ -6,7 +7,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=test','root','12345678');
 }
 
 if (isset($_POST['id'])) {
-    $sql = "DELETE FROM message WHERE id = :id";
+    $sql = 'DELETE FROM message WHERE id = :id';
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $_POST['id']);
     $stmt->execute();
@@ -16,14 +17,18 @@ if (isset($_POST['id'])) {
     Select ID to delete:
 
 <?php
+
 $result = $pdo->query('select * from message');
+
 ?>
 <select name="id">
 
 <?php
+
 while($row = $result->fetch()) {
-    echo "<option value=".$row['id'].">".$row['id']."</option>";
+    echo '<option value=' . $row['id'] . '>' . $row['id'] . '</option>';
 }
+
 ?>
 
 </select>
