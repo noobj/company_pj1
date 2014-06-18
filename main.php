@@ -33,7 +33,12 @@ $totalPages = ceil($totalRecords/$pageRowRecords);
 <?php
 
 while ($row = $result->fetch()) {
-    echo ' <tr><td>'.$row['id'].'</td><td>'.$row['content'].'</td>  <td>'.$row['user'].'</td><td> '.$row['time']."</td>  </tr>";
+printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+    $row['id'],
+    $row['content'],
+    $row['user'],
+    $row['time']
+);
 }
 
 ?>

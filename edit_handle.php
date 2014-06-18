@@ -2,13 +2,11 @@
 
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '12345678');
-} catch(PDOException $e)
-{
+} catch(PDOException $e) {
     echo 'conld not connect';
 }
 
-if (isset($_POST['message']))
-{
+if (isset($_POST['message'])) {
     $sql = 'UPDATE message SET content = :content WHERE id = :id;';
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':content', $_POST['message']);
@@ -18,8 +16,7 @@ if (isset($_POST['message']))
 }
 
 
-if (isset($_POST['id']))
-{
+if (isset($_POST['id'])) {
     $sql = 'SELECT * FROM message WHERE id = :id';
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $_POST['id']);

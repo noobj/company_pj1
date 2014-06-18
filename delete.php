@@ -1,9 +1,9 @@
 <?php
 
 try {
-$pdo = new PDO('mysql:host=localhost;dbname=test','root','12345678');
+    $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '12345678');
 } catch(PDOException $e) {
-    echo "conld not connect";
+    echo 'conld not connect';
 }
 
 if (isset($_POST['id'])) {
@@ -26,7 +26,7 @@ $result = $pdo->query('select * from message');
 <?php
 
 while($row = $result->fetch()) {
-    echo '<option value=' . $row['id'] . '>' . $row['id'] . '</option>';
+    printf("<option value=%d>%d</option>", $row['id'], $row['id']) ;
 }
 
 ?>
