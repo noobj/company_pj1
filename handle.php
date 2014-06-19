@@ -1,18 +1,11 @@
 <?php
 
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=test', 'root' , '12345678');
-} catch(PDOException $e) {
-    echo 'conld not connect';
-}
+require_once 'bootstrap.php';
 
-$sql = 'insert into message (content, user) values (:content, :user)';
-$stmt = $pdo->prepare($sql);
-$param = [
-    ':content' => $_POST['message'],
-    ':user' => $_POST['name']
-];
-$stmt->execute($param);
-?>
+$obj = new Message(new \DateTime("now"));
+$obj->setContent($_POST['message']);
+$obj->setUser($_POST['name']);
 
-<meta http-equiv="refresh" content="0;url='main.php'">
+$entityManager->persist($obj);
+$entityManager->flush();
+header("location:main.php");

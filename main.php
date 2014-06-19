@@ -1,5 +1,7 @@
 <?php
 
+require_once 'bootstrap.php';
+
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=test','root','12345678');
 } catch(PDOException $e) {
@@ -15,7 +17,7 @@ if (isset($_GET['page'])) {
 
 $startRowRecords = ($numPages -1) * $pageRowRecords;
 $sqlQueryLimit = sprintf(
-    'SELECT * FROM message ORDER BY time DESC LIMIT %d, %d',
+    'SELECT * FROM message1 ORDER BY time DESC LIMIT %d, %d',
     $startRowRecords,
     $pageRowRecords
 );
@@ -31,14 +33,15 @@ $totalPages = ceil($totalRecords/$pageRowRecords);
 <table border="1" align="center">
     <tr><td>id</td><td>content</td><td>user</td><td>date</td></tr>
 <?php
-
-while ($row = $result->fetch()) {
-printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
-    $row['id'],
-    $row['content'],
-    $row['user'],
-    $row['time']
-);
+$messageRep = $entityManager->getRepository('Message');
+$messages = $messageRep->findAll();
+foreach ($messages as $message) {
+    echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+        $message->getId(),
+        $message->getContent(),
+        $message->getUser(),
+        $message->getTime()
+    );
 }
 
 ?>
@@ -51,13 +54,17 @@ printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
-        echo sprintf("<td><a href=%s?page=%d>%d</a></td>", $_SERVER['PHP_SELF'], $i, $i);
+        echo sprintf("<td><a href=%s?page=%d>%d</a></td>",
+            $_SERVER['PHP_SELF'],
+            $i,
+            $i
+        );
         $i++;
     }
 }
 
 ?>
-  </tr>
+</tr>
 </table>
 
 <hr />

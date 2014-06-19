@@ -1,34 +1,26 @@
 <?php
 
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '12345678');
-} catch(PDOException $e) {
-    echo 'conld not connect';
-}
+require_once 'bootstrap.php';
 
 if (isset($_POST['id'])) {
-    $sql = 'DELETE FROM message WHERE id = :id';
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', $_POST['id']);
-    $stmt->execute();
+    $toDelete = $entityManager->find('Message',$_POST['id']);
+    $entityManager->remove($toDelete);
+    $entityManager->flush();
 }
 ?>
 <form name="form" action=<?php echo $_SERVER['PHP_SELF'];?> method="post">
     Select ID to delete:
-
-<?php
-
-$result = $pdo->query('select * from message');
-
-?>
 <select name="id">
 
 <?php
-
-while($row = $result->fetch()) {
-    printf("<option value=%d>%d</option>", $row['id'], $row['id']) ;
+$messageRep = $entityManager->getRepository('Message');
+$messages = $messageRep->findAll();
+foreach ($messages as $message) {
+    printf("<option value=%d>%d</option>",
+        $message->getId(),
+        $message->getId()
+    );
 }
-
 ?>
 
 </select>
