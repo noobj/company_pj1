@@ -4,7 +4,6 @@ require_once "vendor/autoload.php";
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = false;
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
@@ -19,8 +18,7 @@ $conn = array(
    'password' => '12345678',
    'host' => 'localhost',
    'dbname' => 'test',
-  );
+);
 
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
-

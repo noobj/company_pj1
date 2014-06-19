@@ -4,62 +4,56 @@
  * @Entity
  * @Table(name="message1")
  */
-class Message
-{
-   /**
-    * @Id
-    * @Column(type="integer")
-    * @GeneratedValue(strategy="IDENTITY")
-    */
-   protected $id;
+class Message {
 
-   /**
-    * @Column(type="string", length=50)
-    */
-   protected $user;
+    /**
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
 
-   /**
-    * @Column(type="string", length=500)
-    */
-   protected $content;
+    /**
+     * @Column(type="string", length=50)
+     */
+    protected $user;
 
-   /**
-    * @Column(type="datetime")
-    */
-   protected $time;
+    /**
+     * @Column(type="string", length=500)
+     */
+    protected $content;
 
-   public function __construct(\DateTime $createDate)
-   {
+    /**
+     * @Column(type="datetime")
+     */
+    protected $time;
+
+    public function __construct(\DateTime $createDate) {
         $this->time = $createDate;
-   }
+    }
 
-   public function getId()
-   {
+    public function getId() {
         return $this->id;
-   }
+    }
 
-   public function getUser()
-   {
+    public function getUser() {
         return $this->user;
-   }
+    }
 
-   public function setUser($name)
-   {
+    public function setUser($name) {
         $this->user = $name;
-   }
+    }
 
-   public function getContent()
-   {
+    public function getContent() {
         return $this->content;
-   }
+    }
 
-   public function setContent($content)
-   {
+    public function setContent($content) {
         $this->content = $content;
-   }
+    }
 
-   public function getTime()
-   {
-       return $this->time->format('Y-m-d H:i:s');
-   }
+    public function getTime() {
+        return $this->time->format('Y-m-d H:i:s');
+    }
+
 }

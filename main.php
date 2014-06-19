@@ -2,39 +2,34 @@
 
 require_once 'bootstrap.php';
 
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=test','root','12345678');
-} catch(PDOException $e) {
-    echo "conld not connect";
-}
-
 //pagination
-$pageRowRecords = 5;
+$pageRowRecords = 1;
 $numPages = 1;
+
+
 if (isset($_GET['page'])) {
   $numPages = $_GET['page'];
 }
-
 $startRowRecords = ($numPages -1) * $pageRowRecords;
-$sqlQueryLimit = sprintf(
-    'SELECT * FROM message1 ORDER BY time DESC LIMIT %d, %d',
-    $startRowRecords,
-    $pageRowRecords
-);
 
-$result = $pdo->query($sqlQueryLimit);
+$dql = "SELECT i FROM Message i ORDER BY i.time DESC";
+$query = $entityManager->createQuery($dql)
+    ->setFirstResult($startRowRecords)
+    ->setMaxResults($pageRowRecords);
 
-$pre = $pdo->prepare("SELECT COUNT(id) FROM `message`");
-$pre->execute();
-$totalRecords = $pre->fetchColumn();
+$messages = $query->getResult();
+
+$messageRep = $entityManager->getRepository('Message');
+$i = $messageRep->findAll();
+$c = count($i);
+
+$totalRecords = $c;
 $totalPages = ceil($totalRecords/$pageRowRecords);
 
 ?>
 <table border="1" align="center">
     <tr><td>id</td><td>content</td><td>user</td><td>date</td></tr>
 <?php
-$messageRep = $entityManager->getRepository('Message');
-$messages = $messageRep->findAll();
 foreach ($messages as $message) {
     echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
         $message->getId(),
@@ -43,7 +38,6 @@ foreach ($messages as $message) {
         $message->getTime()
     );
 }
-
 ?>
 
 </table>
