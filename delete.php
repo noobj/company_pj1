@@ -16,7 +16,8 @@ if (isset($_POST['id'])) {
 $messageRep = $entityManager->getRepository('Message');
 $messages = $messageRep->findAll();
 foreach ($messages as $message) {
-    printf("<option value=%d>%d</option>",
+    printf(
+        '<option value="%d">%d</option>',
         $message->getId(),
         $message->getId()
     );

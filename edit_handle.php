@@ -1,11 +1,6 @@
 <?php
 
 require_once 'bootstrap.php';
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '12345678');
-} catch(PDOException $e) {
-    echo 'conld not connect';
-}
 
 if (isset($_POST['message'])) {
     $toEdit = $entityManager->find('Message', $_POST['id']);

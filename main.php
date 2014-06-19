@@ -2,26 +2,25 @@
 
 require_once 'bootstrap.php';
 
-//pagination
-$pageRowRecords = 1;
+//for pagination
+$pageRowRecords = 2;
 $numPages = 1;
-
 
 if (isset($_GET['page'])) {
   $numPages = $_GET['page'];
 }
 $startRowRecords = ($numPages -1) * $pageRowRecords;
 
-$dql = "SELECT i FROM Message i ORDER BY i.time DESC";
+$dql = 'SELECT i FROM Message i ORDER BY i.time DESC';
 $query = $entityManager->createQuery($dql)
     ->setFirstResult($startRowRecords)
     ->setMaxResults($pageRowRecords);
 
 $messages = $query->getResult();
 
-$messageRep = $entityManager->getRepository('Message');
-$i = $messageRep->findAll();
-$c = count($i);
+$countDql = 'SELECT COUNT(i.id) FROM Message i';
+$queryForCount = $entityManager->createQuery($countDql);
+$c = $queryForCount->getSingleScalarResult();
 
 $totalRecords = $c;
 $totalPages = ceil($totalRecords/$pageRowRecords);
@@ -31,7 +30,8 @@ $totalPages = ceil($totalRecords/$pageRowRecords);
     <tr><td>id</td><td>content</td><td>user</td><td>date</td></tr>
 <?php
 foreach ($messages as $message) {
-    echo sprintf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+    echo sprintf(
+        '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>',
         $message->getId(),
         $message->getContent(),
         $message->getUser(),
@@ -48,11 +48,13 @@ foreach ($messages as $message) {
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
-        echo sprintf("<td><a href=%s?page=%d>%d</a></td>",
+        echo sprintf(
+            '<td><a href=%s?page=%d>%d</a></td>',
             $_SERVER['PHP_SELF'],
             $i,
             $i
         );
+
         $i++;
     }
 }
