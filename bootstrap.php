@@ -5,7 +5,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 $isDevMode = false;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/src'), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration([__DIR__.'/src'], $isDevMode);
 
 // database configuration parameters
 $conn = [

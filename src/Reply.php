@@ -2,9 +2,9 @@
 
 /**
  * @Entity
- * @Table(name="message")
+ * @Table(name="reply")
  */
-class Message
+Class Reply
 {
     /**
      * @var integer
@@ -14,6 +14,16 @@ class Message
      * @GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * mapping on Message id
+     *
+     * @var integer
+     *
+     * @ManyToOne(targetEntity="Message")
+     * @JoinColumn(name="message_id", referencedColumnName="id")
+     */
+    private $parent;
 
     /**
      * For record user name
@@ -74,7 +84,7 @@ class Message
      *set the user name
      *
      * @param string
-     * @return Message
+     * @return Reply
      */
     public function setUser($name)
     {
@@ -96,7 +106,7 @@ class Message
      * set message content
      *
      * @param string
-     * @return Message
+     * @return Reply
      */
     public function setContent($content)
     {
@@ -113,4 +123,27 @@ class Message
     {
         return $this->time;
     }
+
+    /**
+     * return message_id
+     *
+     * @return integer
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * set message_id
+     *
+     * @param Message
+     * @return Reply
+     */
+    public function setParent(Message $message)
+    {
+        $this->parent = $message;
+        return $this;
+    }
 }
+

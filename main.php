@@ -3,54 +3,94 @@
 require_once 'bootstrap.php';
 
 //for pagination
-$pageRowRecords = 2;
+$pageRowRecords = 3;
 $numPages = 1;
 
 if (isset($_GET['page'])) {
-  $numPages = $_GET['page'];
+    if (!is_numeric($_GET['page']))
+        throw new Exception ('Dont mess up!');
+
+    $getPage = $_GET['page'];
+    $numPages = $getPage;
 }
 $startRowRecords = ($numPages -1) * $pageRowRecords;
 
-$dql = 'SELECT i FROM Message i ORDER BY i.time DESC';
-$query = $entityManager->createQuery($dql)
+$qb = $entityManager->createQueryBuilder();
+$qb->select('i')
+    ->from('Message', 'i')
+    ->orderBy('i.time', 'DESC')
     ->setFirstResult($startRowRecords)
     ->setMaxResults($pageRowRecords);
 
+$query = $qb->getQuery();
 $messages = $query->getResult();
 
-$countDql = 'SELECT COUNT(i.id) FROM Message i';
-$queryForCount = $entityManager->createQuery($countDql);
+$qbCount = $entityManager->createQueryBuilder();
+$qbCount->select('COUNT(i.id)')
+        ->from('Message', 'i');
+$queryForCount = $qbCount->getQuery();
 $c = $queryForCount->getSingleScalarResult();
-
 $totalRecords = $c;
 $totalPages = ceil($totalRecords/$pageRowRecords);
 
 ?>
-<table border="1" align="center">
-    <tr><td>id</td><td>content</td><td>user</td><td>date</td></tr>
+<ul>
 <?php
+
 foreach ($messages as $message) {
+
+    $qbReply = $entityManager->createQueryBuilder();
+    $qbReply->select('i')
+            ->from('Reply', 'i')
+            ->where('i.parent = :identifier')
+            ->orderBy('i.time', 'DESC')
+            ->setParameter('identifier', $message->getId());
+    $query = $qbReply->getQuery();
+    $replys = $query->getResult();
     echo sprintf(
-        '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>',
+        '<li>%s. %s <br />by %s at  %s',
         $message->getId(),
         $message->getContent(),
         $message->getUser(),
-        $message->getTime()
+        $message->getTime()->format('m/d H:i:s')
     );
+
+    //print replys
+    echo '<ul>';
+    foreach ($replys as $reply) {
+        echo sprintf(
+            '<li>%s <br />by %s at  %s',
+            $reply->getContent(),
+            $reply->getUser(),
+            $reply->getTime()->format('m/d H:i:s')
+        );
+    }
+    echo '</ul>';
+    printf(
+        '<a href="reply.php?id=%d">Reply</a> ',
+        $message->getId()
+    );
+    printf(
+        '<br /><a href="replyDelete.php?id=%d">Delete Reply</a>',
+        $message->getId()
+    );
+
+    echo '</li><hr>';
 }
 ?>
 
-</table>
+</ul>
 <table border="0" align="center">
   <tr>
 <?php
+
 //pagination
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
         echo sprintf(
             '<td><a href=%s?page=%d>%d</a></td>',
-            $_SERVER['PHP_SELF'],
+            "main.php",
             $i,
             $i
         );
