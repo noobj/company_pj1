@@ -105,7 +105,7 @@ if ($totalPages > 1) {
 <a href="delete.php">delete</a>
 <hr />
 <form name="form" action="handle.php" method="post">
-    Name:<input type="text" name="name" /> <br />
-    Message:<input type="textarea" name="message" />  <br />
+    Name:<input type="text" name="user" /> <br />
+    Message:<input type="textarea" name="content" />  <br />
     <input type="submit" value="submit" />
 </form>

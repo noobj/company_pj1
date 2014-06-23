@@ -2,12 +2,12 @@
 
 require_once 'bootstrap.php';
 
-$postMessage = mysql_escape_string($_POST['message']);
-$postName = mysql_escape_string($_POST['name']);
+$content = mysql_escape_string($_POST['content']);
+$user = mysql_escape_string($_POST['user']);
 
 $obj = new Message();
-$obj->setContent($postMessage);
-$obj->setUser($postName);
+$obj->setContent($content);
+$obj->setUser($user);
 
 $entityManager->persist($obj);
 $entityManager->flush();

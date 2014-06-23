@@ -3,12 +3,12 @@
 require_once 'bootstrap.php';
 
 if (isset($_POST['id'])) {
-    $postId = $_POST['id'];
-    if (!is_numeric($getId)) {
+    $messageId = $_POST['id'];
+    if (!is_numeric($messageId)) {
         throw new Exception('Id is not a number!');
     }
 
-    $toDelete = $entityManager->find('Message', $postId);
+    $toDelete = $entityManager->find('Message', $messageId);
     $errMsg = null;
 
     if (!$toDelete) {
