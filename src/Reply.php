@@ -20,7 +20,7 @@ Class Reply
      *
      * @var integer
      *
-     * @ManyToOne(targetEntity="Message")
+     * @ManyToOne(targetEntity="Message", inversedBy="replys")
      * @JoinColumn(name="message_id", referencedColumnName="id")
      */
     private $message;
@@ -46,7 +46,7 @@ Class Reply
     /**
      * For record the message leaving time
      *
-     * @var DateTime
+     * @var \DateTime
      *
      * @Column(type="datetime")
      */

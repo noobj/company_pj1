@@ -43,11 +43,31 @@ class Message
     private $time;
 
     /**
+     *紀錄在這個留言下的回覆
+     *
+     * @var Doctrine\Common\Collections\ArrayCollection
+     *
+     * @OneToMany(targetEntity="Reply", mappedBy="message")
+     */
+    private $replys;
+
+    /**
      * normal construct
      */
     public function __construct()
     {
         $this->time = new \DateTime('now');
+        $this->replys = new Doctrine\Common\Collections\ArrayCollectio1n();
+    }
+
+    /**
+     *return this message's replys
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getReplys()
+    {
+        return $this->replys;
     }
 
     /**
