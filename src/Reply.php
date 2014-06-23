@@ -20,7 +20,7 @@ Class Reply
      *
      * @var integer
      *
-     * @ManyToOne(targetEntity="Message", inversedBy="replys")
+     * @ManyToOne(targetEntity="Message", inversedBy="replies")
      * @JoinColumn(name="message_id", referencedColumnName="id")
      */
     private $message;
@@ -130,7 +130,7 @@ Class Reply
     /**
      * return message_id
      *
-     * @return integer
+     * @return Message
      */
     public function getMessage()
     {

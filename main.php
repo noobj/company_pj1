@@ -40,15 +40,7 @@ $totalPages = ceil($totalRecords/$pageRowRecords);
 
 foreach ($messages as $message) {
 
-    /*$qbReply = $entityManager->createQueryBuilder();
-    $qbReply->select('i')
-        ->from('Reply', 'i')
-        ->where('i.message = :identifier')
-        ->orderBy('i.time', 'DESC')
-        ->setParameter('identifier', $message->getId());
-    $query = $qbReply->getQuery();
-    $replys = $query->getResult();*/
-    $replys = $message->getReplys();
+    $replies = $message->getReplies();
     printf(
         '<li>%s. %s <br />by %s at  %s',
         $message->getId(),
@@ -59,24 +51,21 @@ foreach ($messages as $message) {
 
     //print replys
     echo '<ul>';
-    $reply = $replys->current();
-    $replyCount = $replys->count();
+    $reply = $replies->current();
+    $replyCount = $replies->count();
 
     //由於ArrayCollection() 沒有previous()可用
     //因此只好使用原始的方法來達到從最後一個INDEX
     //往前到第一個 以達到最後留言的在最上面
-    $i = 1;
-    $reply = $replys[$replyCount-$i];
-    while ($reply) {
-    printf(
+    for ($i = $replyCount - 1 ; $i >= 0 ; $i--)
+    {
+        $reply = $replies[$i];
+        printf(
             '<li>%s <br />by %s at  %s',
             $reply->getContent(),
             $reply->getUser(),
             $reply->getTime()->format('m/d H:i:s')
         );
-
-        $i++;
-        $reply = $replys[$replyCount-$i];
     }
     echo '</ul>';
     printf(

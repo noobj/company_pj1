@@ -49,7 +49,7 @@ class Message
      *
      * @OneToMany(targetEntity="Reply", mappedBy="message")
      */
-    private $replys;
+    private $replyies;
 
     /**
      * normal construct
@@ -57,7 +57,7 @@ class Message
     public function __construct()
     {
         $this->time = new \DateTime('now');
-        $this->replys = new Doctrine\Common\Collections\ArrayCollectio1n();
+        $this->replyies = new Doctrine\Common\Collections\ArrayCollectio1n();
     }
 
     /**
@@ -65,9 +65,9 @@ class Message
      *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
-    public function getReplys()
+    public function getReplies()
     {
-        return $this->replys;
+        return $this->replyies;
     }
 
     /**

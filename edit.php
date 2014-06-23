@@ -1,7 +1,3 @@
-<?php
-
-require_once 'bootstrap.php';
-?>
 <form name="form" action="edit_handle.php" method="post">
 Input ID to edit:
 <br />
