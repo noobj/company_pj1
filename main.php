@@ -18,7 +18,7 @@ $startRowRecords = ($numPages -1) * $pageRowRecords;
 $qb = $entityManager->createQueryBuilder();
 $qb->select('i')
     ->from('Message', 'i')
-    ->orderBy('i.time', 'DESC')
+    ->orderBy('i.commentTime', 'DESC')
     ->setFirstResult($startRowRecords)
     ->setMaxResults($pageRowRecords);
 

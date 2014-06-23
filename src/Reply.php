@@ -50,7 +50,7 @@ Class Reply
      *
      * @Column(type="datetime")
      */
-    private $time;
+    private $replyTime;
 
     /**
      * normal construct
@@ -60,7 +60,7 @@ Class Reply
     public function __construct(Message $message)
     {
         $this->message = $message;
-        $this->time = new \DateTime('now');
+        $this->replyTime = new \DateTime('now');
     }
 
     /**
@@ -92,7 +92,7 @@ Class Reply
     public function setUser($name)
     {
         $this->user = $name;
-        
+
         return $this;
     }
 
@@ -126,7 +126,7 @@ Class Reply
      */
     public function getTime()
     {
-        return $this->time;
+        return $this->replyTime;
     }
 
     /**

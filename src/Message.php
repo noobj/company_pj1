@@ -40,7 +40,7 @@ class Message
      *
      * @Column(type="datetime")
      */
-    private $time;
+    private $commentTime;
 
     /**
      *紀錄在這個留言下的回覆
@@ -56,7 +56,7 @@ class Message
      */
     public function __construct()
     {
-        $this->time = new \DateTime('now');
+        $this->commentTime = new \DateTime('now');
         $this->replyies = new Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -133,6 +133,6 @@ class Message
      */
     public function getTime()
     {
-        return $this->time;
+        return $this->commentTime;
     }
 }
