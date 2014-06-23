@@ -43,7 +43,7 @@ class Message
     private $commentTime;
 
     /**
-     *紀錄在這個留言下的回覆
+     * 紀錄在這個留言下的回覆
      *
      * @var Doctrine\Common\Collections\ArrayCollection
      *
@@ -61,7 +61,7 @@ class Message
     }
 
     /**
-     *return this message's replys
+     * return this message's replys
      *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
@@ -91,7 +91,7 @@ class Message
     }
 
     /**
-     *set the user name
+     * set the user name
      *
      * @param string
      * @return Message
@@ -131,7 +131,7 @@ class Message
      *
      * @return string
      */
-    public function getTime()
+    public function getCommitTime()
     {
         return $this->commentTime;
     }

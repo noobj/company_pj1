@@ -8,12 +8,12 @@ $numPages = 1;
 
 if (isset($_GET['page'])) {
     if (!is_numeric($_GET['page'])) {
-        throw new Exception ('Dont mess up!');
+        throw new \Exception('Dont mess up!');
     }
     $getPage = $_GET['page'];
     $numPages = $getPage;
 }
-$startRowRecords = ($numPages -1) * $pageRowRecords;
+$startRowRecords = ($numPages - 1) * $pageRowRecords;
 
 $qb = $entityManager->createQueryBuilder();
 $qb->select('i')
@@ -26,12 +26,9 @@ $query = $qb->getQuery();
 $messages = $query->getResult();
 
 $qbCount = $entityManager->createQueryBuilder();
-$qbCount->select('COUNT(i.id)')
-    ->from('Message', 'i');
-$queryForCount = $qbCount->getQuery();
-$c = $queryForCount->getSingleScalarResult();
-$totalRecords = $c;
-$totalPages = ceil($totalRecords/$pageRowRecords);
+$qbCount->select('COUNT(i.id)')->from('Message', 'i');
+$totalRecords = $qbCount->getQuery()->getSingleScalarResult();
+$totalPages = ceil($totalRecords / $pageRowRecords);
 
 ?>
 <h1>留言板</h1>
@@ -46,36 +43,26 @@ foreach ($messages as $message) {
         $message->getId(),
         $message->getContent(),
         $message->getUser(),
-        $message->getTime()->format('m/d H:i:s')
+        $message->getCommitTime()->format('m/d H:i:s')
     );
 
-    //print replys
+    //print replies in desc order
     echo '<ul>';
-    $reply = $replies->current();
     $replyCount = $replies->count();
-
-    //由於ArrayCollection() 沒有previous()可用
-    //因此只好使用原始的方法來達到從最後一個INDEX
-    //往前到第一個 以達到最後留言的在最上面
-    for ($i = $replyCount - 1 ; $i >= 0 ; $i--)
-    {
+    for ($i = $replyCount - 1 ; $i >= 0 ; $i--) {
         $reply = $replies[$i];
         printf(
             '<li>%s <br />by %s at  %s',
             $reply->getContent(),
             $reply->getUser(),
-            $reply->getTime()->format('m/d H:i:s')
+            $reply->getReplyTime()->format('m/d H:i:s')
         );
     }
     echo '</ul>';
-    printf(
-        '<a href="reply.php?id=%d">Reply</a> ',
-        $message->getId()
-    );
-    printf(
-        '<br /><a href="replyDelete.php?id=%d">Delete Reply</a>',
-        $message->getId()
-    );
+    $msgId = $message->getId();
+
+    echo "<a href=\"reply.php?id=$msgId\">Reply</a>".
+        "<br /><a href=\"replyDelete.php?id=$msgId\">Delete Reply</a>";
 
     echo '</li><hr>';
 }

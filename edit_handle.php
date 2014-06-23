@@ -4,7 +4,7 @@ require_once 'bootstrap.php';
 
 $messageId = $_POST['id'];
 if (!is_numeric($messageId)) {
-    throw new Exception('Id is not a number!');
+    throw new \Exception('Id is not a number!');
 }
 
 if (isset($_POST['content'])) {
@@ -19,7 +19,7 @@ if (isset($_POST['content'])) {
 if (isset($messageId)) {
     $message = $entityManager->find('Message', $messageId);
     if (!$message) {
-        throw new Exception('this id is invalid');
+        throw new \Exception('this id is invalid');
     }
 }
 ?>

@@ -124,7 +124,7 @@ Class Reply
      *
      * @return \DateTime
      */
-    public function getTime()
+    public function getReplyTime()
     {
         return $this->replyTime;
     }
@@ -139,4 +139,3 @@ Class Reply
         return $this->message;
     }
 }
-

@@ -5,7 +5,7 @@ require_once 'bootstrap.php';
 if (isset($_POST['id'])) {
     $messageId = $_POST['id'];
     if (!is_numeric($messageId)) {
-        throw new Exception('Id is not a number!');
+        throw new \Exception('Id is not a number!');
     }
 
     $toDelete = $entityManager->find('Message', $messageId);
