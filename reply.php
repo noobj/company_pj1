@@ -15,7 +15,6 @@ if (isset($_GET['id'])) {
         $message = $entityManager->find('Message', $getId);
         $obj = new Reply($message);
         var_dump($message->getReplies()->first());
-        $message->getReplies()->add($obj);
         $obj->setContent($postMessage);
         $obj->setUser($postName);
 

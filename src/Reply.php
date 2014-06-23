@@ -18,7 +18,7 @@ Class Reply
     /**
      * mapping on Message id
      *
-     * @var integer
+     * @var Message
      *
      * @ManyToOne(targetEntity="Message", inversedBy="replies")
      * @JoinColumn(name="message_id", referencedColumnName="id")
@@ -92,6 +92,7 @@ Class Reply
     public function setUser($name)
     {
         $this->user = $name;
+        
         return $this;
     }
 
@@ -114,6 +115,7 @@ Class Reply
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -136,7 +138,5 @@ Class Reply
     {
         return $this->message;
     }
-
-
 }
 

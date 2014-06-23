@@ -7,9 +7,9 @@ $pageRowRecords = 3;
 $numPages = 1;
 
 if (isset($_GET['page'])) {
-    if (!is_numeric($_GET['page']))
+    if (!is_numeric($_GET['page'])) {
         throw new Exception ('Dont mess up!');
-
+    }
     $getPage = $_GET['page'];
     $numPages = $getPage;
 }
@@ -90,11 +90,7 @@ foreach ($messages as $message) {
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
-        echo sprintf(
-            '<td><a href="main.php"?page=%d>%d</a></td>',
-            $i,
-            $i
-        );
+        echo "<td><a href='main.php?page=$i'>$i</a></td>";
 
         $i++;
     }

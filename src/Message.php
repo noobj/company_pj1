@@ -57,7 +57,7 @@ class Message
     public function __construct()
     {
         $this->time = new \DateTime('now');
-        $this->replyies = new Doctrine\Common\Collections\ArrayCollectio1n();
+        $this->replyies = new Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -99,6 +99,7 @@ class Message
     public function setUser($name)
     {
         $this->user = $name;
+
         return $this;
     }
 
@@ -121,6 +122,7 @@ class Message
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 

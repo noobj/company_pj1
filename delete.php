@@ -9,7 +9,7 @@ if (isset($_POST['id'])) {
     }
 
     $toDelete = $entityManager->find('Message', $postId);
-    $errMsg = NULL;
+    $errMsg = null;
 
     if (!$toDelete) {
         echo 'This Id is invalid<br />';
