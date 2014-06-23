@@ -36,7 +36,7 @@ class Message
     /**
      * For record the message leaving time
      *
-     * @var DateTime
+     * @var \DateTime
      *
      * @Column(type="datetime")
      */

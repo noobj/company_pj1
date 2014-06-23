@@ -12,9 +12,9 @@ if (isset($_GET['id'])) {
         $postName = $_POST['name'];
         $postMessage = $_POST['message'];
 
-        $obj = new Reply();
+
         $message = $entityManager->find('Message', $getId);
-        $obj->setParent($message);
+        $obj = new Reply($message);
         $obj->setContent($postMessage);
         $obj->setUser($postName);
 
@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
     }
 }
 ?>
-<form action=<?php echo 'reply.php' . '?id=' . $getId; ?> method='post'>
+<form action='reply.php?id= <?php echo $getId; ?>' method='post'>
     Name:<input type="text" name="name" /> <br />
     Message:<input type="textarea" name="message" />  <br />
     <input type='hidden' name='messageId' value=<?php echo $getId; ?> />

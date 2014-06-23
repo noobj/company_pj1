@@ -34,6 +34,7 @@ $totalRecords = $c;
 $totalPages = ceil($totalRecords/$pageRowRecords);
 
 ?>
+<h1>留言板</h1>
 <ul>
 <?php
 
@@ -41,13 +42,13 @@ foreach ($messages as $message) {
 
     $qbReply = $entityManager->createQueryBuilder();
     $qbReply->select('i')
-            ->from('Reply', 'i')
-            ->where('i.parent = :identifier')
-            ->orderBy('i.time', 'DESC')
-            ->setParameter('identifier', $message->getId());
+        ->from('Reply', 'i')
+        ->where('i.message = :identifier')
+        ->orderBy('i.time', 'DESC')
+        ->setParameter('identifier', $message->getId());
     $query = $qbReply->getQuery();
     $replys = $query->getResult();
-    echo sprintf(
+    printf(
         '<li>%s. %s <br />by %s at  %s',
         $message->getId(),
         $message->getContent(),
@@ -89,8 +90,7 @@ if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
         echo sprintf(
-            '<td><a href=%s?page=%d>%d</a></td>',
-            "main.php",
+            '<td><a href="main.php"?page=%d>%d</a></td>',
             $i,
             $i
         );

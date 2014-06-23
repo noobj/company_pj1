@@ -23,7 +23,7 @@ Class Reply
      * @ManyToOne(targetEntity="Message")
      * @JoinColumn(name="message_id", referencedColumnName="id")
      */
-    private $parent;
+    private $message;
 
     /**
      * For record user name
@@ -54,9 +54,12 @@ Class Reply
 
     /**
      * normal construct
+     *
+     * @param Message
      */
-    public function __construct()
+    public function __construct(Message $message)
     {
+        $this->message = $message;
         $this->time = new \DateTime('now');
     }
 
@@ -117,7 +120,7 @@ Class Reply
     /**
      * return message time
      *
-     * @return string
+     * @return \DateTime
      */
     public function getTime()
     {
@@ -129,21 +132,11 @@ Class Reply
      *
      * @return integer
      */
-    public function getParent()
+    public function getMessage()
     {
-        return $this->parent;
+        return $this->message;
     }
 
-    /**
-     * set message_id
-     *
-     * @param Message
-     * @return Reply
-     */
-    public function setParent(Message $message)
-    {
-        $this->parent = $message;
-        return $this;
-    }
+
 }
 
