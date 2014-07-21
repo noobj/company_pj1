@@ -10,8 +10,7 @@ if (isset($_GET['page'])) {
     if (!is_numeric($_GET['page'])) {
         throw new \Exception('Dont mess up!');
     }
-    $getPage = $_GET['page'];
-    $numPages = $getPage;
+    $numPages = $_GET['page'];
 }
 $startRowRecords = ($numPages - 1) * $pageRowRecords;
 
@@ -43,7 +42,7 @@ foreach ($messages as $message) {
         $message->getId(),
         $message->getContent(),
         $message->getUser(),
-        $message->getCommitTime()->format('m/d H:i:s')
+        $message->getCommentTime()->format('m/d H:i:s')
     );
 
     //print replies in desc order
