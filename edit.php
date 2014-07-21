@@ -4,4 +4,3 @@ Input ID to edit:
 <input type="text" name="id"/>
 <input type="submit" value="submit" />
 </form>
-<a href="main.php">main</a>
