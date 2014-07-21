@@ -59,16 +59,28 @@ foreach ($messages as $message) {
 
     //print replys
     echo '<ul>';
+<<<<<<< HEAD
     $reply = $replys->current();
     $replyCount = $replys->count();
+=======
+    $reply = $replies->current();
+    $replyCount = $replies->count();
+>>>>>>> fuck
 
     //由於ArrayCollection() 沒有previous()可用
     //因此只好使用原始的方法來達到從最後一個INDEX
     //往前到第一個 以達到最後留言的在最上面
+<<<<<<< HEAD
     $i = 1;
     $reply = $replys[$replyCount-$i];
     while ($reply) {
     printf(
+=======
+    for ($i = $replyCount - 1 ; $i >= 0 ; $i--)
+    {
+        $reply = $replies[$i];
+        printf(
+>>>>>>> fuck
             '<li>%s <br />by %s at  %s',
             $reply->getContent(),
             $reply->getUser(),
