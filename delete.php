@@ -1,7 +1,6 @@
 <?php
 
 require_once 'bootstrap.php';
-
 if (isset($_POST['id'])) {
     $messageId = $_POST['id'];
     if (!is_numeric($messageId)) {
