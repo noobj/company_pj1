@@ -5,10 +5,8 @@ if (isset($_POST['id'])) {
     if (!is_numeric($getId)) {
         throw new Exception('Id is not a number!');
     }
-
     $toDelete = $entityManager->find('Message', $postId);
     $errMsg = NULL;
-
     if (!$toDelete) {
         echo 'This Id is invalid<br />';
         $errMsg = 'error';
