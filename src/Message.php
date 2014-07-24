@@ -40,34 +40,34 @@ class Message
      *
      * @Column(type="datetime")
      */
-    private $commentTime;
+    private $time;
 
     /**
-     * 紀錄在這個留言下的回覆
+     *紀錄在這個留言下的回覆
      *
      * @var Doctrine\Common\Collections\ArrayCollection
      *
      * @OneToMany(targetEntity="Reply", mappedBy="message")
      */
-    private $replies;
+    private $replys;
 
     /**
      * normal construct
      */
     public function __construct()
     {
-        $this->commentTime = new \DateTime('now');
-        $this->replies = new Doctrine\Common\Collections\ArrayCollection();
+        $this->time = new \DateTime('now');
+        $this->replys = new Doctrine\Common\Collections\ArrayCollectio1n();
     }
 
     /**
-     * return this message's replys
+     *return this message's replys
      *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
-    public function getReplies()
+    public function getReplys()
     {
-        return $this->replies;
+        return $this->replys;
     }
 
     /**
@@ -91,7 +91,7 @@ class Message
     }
 
     /**
-     * set the user name
+     *set the user name
      *
      * @param string
      * @return Message
@@ -99,7 +99,6 @@ class Message
     public function setUser($name)
     {
         $this->user = $name;
-
         return $this;
     }
 
@@ -122,7 +121,6 @@ class Message
     public function setContent($content)
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -131,8 +129,8 @@ class Message
      *
      * @return string
      */
-    public function getCommentTime()
+    public function getTime()
     {
-        return $this->commentTime;
+        return $this->time;
     }
 }

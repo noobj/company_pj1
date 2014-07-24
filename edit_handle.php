@@ -19,7 +19,7 @@ if (isset($_POST['message'])) {
 if (isset($postId)) {
     $message = $entityManager->find('Message', $postId);
     if (!$message) {
-        throw new Exception('this id is invalid');
+        exit('this id is invalid');
     }
 }
 ?>
