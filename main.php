@@ -7,17 +7,18 @@ $pageRowRecords = 3;
 $numPages = 1;
 
 if (isset($_GET['page'])) {
-    if (!is_numeric($_GET['page'])) {
-        throw new \Exception('Dont mess up!');
-    }
-    $numPages = $_GET['page'];
+    if (!is_numeric($_GET['page']))
+        throw new Exception ('Dont mess up!');
+
+    $getPage = $_GET['page'];
+    $numPages = $getPage;
 }
-$startRowRecords = ($numPages - 1) * $pageRowRecords;
+$startRowRecords = ($numPages -1) * $pageRowRecords;
 
 $qb = $entityManager->createQueryBuilder();
 $qb->select('i')
     ->from('Message', 'i')
-    ->orderBy('i.commentTime', 'DESC')
+    ->orderBy('i.time', 'DESC')
     ->setFirstResult($startRowRecords)
     ->setMaxResults($pageRowRecords);
 
@@ -25,9 +26,12 @@ $query = $qb->getQuery();
 $messages = $query->getResult();
 
 $qbCount = $entityManager->createQueryBuilder();
-$qbCount->select('COUNT(i.id)')->from('Message', 'i');
-$totalRecords = $qbCount->getQuery()->getSingleScalarResult();
-$totalPages = ceil($totalRecords / $pageRowRecords);
+$qbCount->select('COUNT(i.id)')
+    ->from('Message', 'i');
+$queryForCount = $qbCount->getQuery();
+$c = $queryForCount->getSingleScalarResult();
+$totalRecords = $c;
+$totalPages = ceil($totalRecords/$pageRowRecords);
 
 ?>
 <h1>留言板</h1>
@@ -36,32 +40,65 @@ $totalPages = ceil($totalRecords / $pageRowRecords);
 
 foreach ($messages as $message) {
 
-    $replies = $message->getReplies();
+    /*$qbReply = $entityManager->createQueryBuilder();
+    $qbReply->select('i')
+        ->from('Reply', 'i')
+        ->where('i.message = :identifier')
+        ->orderBy('i.time', 'DESC')
+        ->setParameter('identifier', $message->getId());
+    $query = $qbReply->getQuery();
+    $replys = $query->getResult();*/
+    $replys = $message->getReplys();
     printf(
         '<li>%s. %s <br />by %s at  %s',
         $message->getId(),
         $message->getContent(),
         $message->getUser(),
-        $message->getCommentTime()->format('m/d H:i:s')
+        $message->getTime()->format('m/d H:i:s')
     );
 
-    //print replies in desc order
+    //print replys
     echo '<ul>';
+<<<<<<< HEAD
+    $reply = $replys->current();
+    $replyCount = $replys->count();
+=======
+    $reply = $replies->current();
     $replyCount = $replies->count();
-    for ($i = $replyCount - 1 ; $i >= 0 ; $i--) {
+>>>>>>> fuck
+
+    //由於ArrayCollection() 沒有previous()可用
+    //因此只好使用原始的方法來達到從最後一個INDEX
+    //往前到第一個 以達到最後留言的在最上面
+<<<<<<< HEAD
+    $i = 1;
+    $reply = $replys[$replyCount-$i];
+    while ($reply) {
+    printf(
+=======
+    for ($i = $replyCount - 1 ; $i >= 0 ; $i--)
+    {
         $reply = $replies[$i];
         printf(
+>>>>>>> fuck
             '<li>%s <br />by %s at  %s',
             $reply->getContent(),
             $reply->getUser(),
-            $reply->getReplyTime()->format('m/d H:i:s')
+            $reply->getTime()->format('m/d H:i:s')
         );
+
+        $i++;
+        $reply = $replys[$replyCount-$i];
     }
     echo '</ul>';
-    $msgId = $message->getId();
-
-    echo "<a href=\"reply.php?id=$msgId\">Reply</a>".
-        "<br /><a href=\"replyDelete.php?id=$msgId\">Delete Reply</a>";
+    printf(
+        '<a href="reply.php?id=%d">Reply</a> ',
+        $message->getId()
+    );
+    printf(
+        '<br /><a href="replyDelete.php?id=%d">Delete Reply</a>',
+        $message->getId()
+    );
 
     echo '</li><hr>';
 }
@@ -76,7 +113,11 @@ foreach ($messages as $message) {
 if ($totalPages > 1) {
     $i = 1;
     while ($i <= $totalPages) {
-        echo "<td><a href='main.php?page=$i'>$i</a></td>";
+        echo sprintf(
+            '<td><a href="main.php"?page=%d>%d</a></td>',
+            $i,
+            $i
+        );
 
         $i++;
     }
@@ -91,7 +132,7 @@ if ($totalPages > 1) {
 <a href="delete.php">delete</a>
 <hr />
 <form name="form" action="handle.php" method="post">
-    Name:<input type="text" name="user" /> <br />
-    Message:<input type="textarea" name="content" />  <br />
+    Name:<input type="text" name="name" /> <br />
+    Message:<input type="textarea" name="message" />  <br />
     <input type="submit" value="submit" />
 </form>

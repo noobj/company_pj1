@@ -2,31 +2,31 @@
 
 require_once 'bootstrap.php';
 
-$messageId = $_POST['id'];
-if (!is_numeric($messageId)) {
-    throw new \Exception('Id is not a number!');
+$postId = $_POST['id'];
+if (!is_numeric($postId)) {
+    throw new Exception('Id is not a number!');
 }
 
-if (isset($_POST['content'])) {
-    $content = mysql_escape_string($_POST['content']);
+if (isset($_POST['message'])) {
+    $postMessage = mysql_escape_string($_POST['message']);
 
-    $toEdit = $entityManager->find('Message', $messageId);
-    $toEdit->setContent($content);
+    $toEdit = $entityManager->find('Message', $postId);
+    $toEdit->setContent($postMessage);
     $entityManager->persist($toEdit);
     $entityManager->flush();
 }
 
-if (isset($messageId)) {
-    $message = $entityManager->find('Message', $messageId);
+if (isset($postId)) {
+    $message = $entityManager->find('Message', $postId);
     if (!$message) {
-        throw new \Exception('this id is invalid');
+        exit('this id is invalid');
     }
 }
 ?>
 
 <form action="edit_handle.php" method='post'>
-<input type="textarea" name="content" value=<?php echo $message->getContent() ?> />
-<input type='hidden' name='id' value=<?php echo $messageId ?> />
+<input type="textarea" name="message" value=<?php echo $message->getContent() ?> />
+<input type='hidden' name='id' value=<?php echo $postId ?> />
 <input type="submit" value="submit" />
 </form>
 <a href="main.php">main</a>

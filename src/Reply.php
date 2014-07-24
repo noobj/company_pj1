@@ -18,9 +18,9 @@ Class Reply
     /**
      * mapping on Message id
      *
-     * @var Message
+     * @var integer
      *
-     * @ManyToOne(targetEntity="Message", inversedBy="replies")
+     * @ManyToOne(targetEntity="Message", inversedBy="replys")
      * @JoinColumn(name="message_id", referencedColumnName="id")
      */
     private $message;
@@ -50,7 +50,7 @@ Class Reply
      *
      * @Column(type="datetime")
      */
-    private $replyTime;
+    private $time;
 
     /**
      * normal construct
@@ -60,7 +60,7 @@ Class Reply
     public function __construct(Message $message)
     {
         $this->message = $message;
-        $this->replyTime = new \DateTime('now');
+        $this->time = new \DateTime('now');
     }
 
     /**
@@ -92,7 +92,6 @@ Class Reply
     public function setUser($name)
     {
         $this->user = $name;
-
         return $this;
     }
 
@@ -115,7 +114,6 @@ Class Reply
     public function setContent($content)
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -124,18 +122,21 @@ Class Reply
      *
      * @return \DateTime
      */
-    public function getReplyTime()
+    public function getTime()
     {
-        return $this->replyTime;
+        return $this->time;
     }
 
     /**
      * return message_id
      *
-     * @return Message
+     * @return integer
      */
     public function getMessage()
     {
         return $this->message;
     }
+
+
 }
+
