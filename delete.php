@@ -1,7 +1,5 @@
 <?php
-
 require_once 'bootstrap.php';
-
 if (isset($_POST['id'])) {
     $postId = $_POST['id'];
     if (!is_numeric($getId)) {
